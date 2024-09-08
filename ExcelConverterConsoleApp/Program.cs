@@ -3,7 +3,6 @@ using ConverterConsoleApp.Models;
 using ConverterConsoleApp.Validators;
 using ConverterConsoleApp.Database;
 using SqlConverterLibrary;
-
 namespace ConverterConsoleApp
 {
     public class Program
@@ -12,14 +11,12 @@ namespace ConverterConsoleApp
         {
             string fileName;
             string input;
-            string fullFilePath;
-            UserInput userInput;
-
+            
             do
             {
                 Console.Write("Enter Filename : ");
                 fileName = Console.ReadLine() ?? string.Empty;
-                if (!InputValidator.IsValidFileName(fileName))
+                if (!InputValidator.IsValidFileName(fileName.Trim()))
                 {
                     Console.WriteLine("You have entered invalid filename.");
                 }
@@ -28,7 +25,7 @@ namespace ConverterConsoleApp
 
             do
             {
-                Console.Write("Select file extension (1) XLSX (2) CSV : ");
+                Console.Write("Convert file to (1) EXCEL (2) TEXT : ");
                 input = Console.ReadLine() ?? string.Empty;
 
                 if (!InputValidator.IsValidInput(input))
@@ -38,11 +35,14 @@ namespace ConverterConsoleApp
             }
             while (!InputValidator.IsValidInput(input));
 
-            var SqlGetCarData = new SqlGetCarData(new ApplicationDBContext());
-            var datatable = SqlGetCarData.GetCarData();
+            var sqlGetCarData = new SqlGetCarData(new ApplicationDBContext());
+            var datatable = sqlGetCarData.GetCarData();
 
             SqlConverter sc;
-            bool result;
+            bool isConversionSuccesful;
+            UserInput userInput;
+            string fullFilePath;
+
             switch (input)
             {
                 case "1":
@@ -50,8 +50,8 @@ namespace ConverterConsoleApp
                     fullFilePath = userInput.FullFilePath;
 
                     sc = new SqlToExcelConverter();
-                    result = sc.ConvertSql(datatable, fullFilePath);
-                    Console.WriteLine(result ? "Sql record has been converted to an Excel File." : "Error converting.");
+                    isConversionSuccesful = sc.ConvertSql(datatable, fullFilePath);
+                    Console.WriteLine(isConversionSuccesful ? "Sql record has been converted to an Excel File." : "Error converting.");
 
                     break;
                 case "2":
@@ -59,8 +59,8 @@ namespace ConverterConsoleApp
                     fullFilePath = userInput.FullFilePath;
 
                     sc = new SqlToTxtConverter();
-                    result = sc.ConvertSql(datatable, fullFilePath);
-                    Console.WriteLine(result ? "Sql record has been converted to a Text File." : "Error converting.");
+                    isConversionSuccesful = sc.ConvertSql(datatable, fullFilePath);
+                    Console.WriteLine(isConversionSuccesful ? "Sql record has been converted to a Text File." : "Error converting.");
                     break;
             }
         }

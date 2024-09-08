@@ -1,4 +1,5 @@
 ﻿using ConverterConsoleApp.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Reflection;
 
@@ -28,11 +29,9 @@ namespace ConverterConsoleApp.Database
                 //} 
                 //_context.SaveChanges();
 
-                var cars = from Car in _context.Cars
-                           where Car.CarId <= 4
-                           select Car;
-
-                var carList = cars.ToList();
+                var carList = _context.Cars
+                           .Where(car => car.CarId <= 4)
+                           .ToList();
 
                 Type type = typeof(Car);
                 PropertyInfo[] properties = type.GetProperties();

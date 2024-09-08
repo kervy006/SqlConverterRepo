@@ -19,6 +19,7 @@ namespace ConverterConsoleApp.Database
             string x = _filePath;
             string jsonString = File.ReadAllText(_filePath);
             using var jsonDoc = JsonDocument.Parse(jsonString);
+            //set value
             _connectionStrings = jsonDoc.RootElement.GetProperty("ConnectionStrings").Deserialize<ConnectionStrings>();
         }
         public ConnectionStrings GetConnectionStrings()

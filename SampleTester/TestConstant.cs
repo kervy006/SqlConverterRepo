@@ -8,7 +8,7 @@ namespace SampleTester
 {
     internal class TestConstant
     {
-        internal const string columnName1 = "Id";
-        internal const string columnName2 = "Name";
+        internal const string columnName1 = "CarId";
+        internal const string columnName2 = "CarName";
     }
 }
