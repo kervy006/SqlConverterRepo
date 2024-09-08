@@ -1,0 +1,5 @@
+{
+    "ConnectionStrings": {
+        "DefaultConnection": "Server=KHY\\SQLEXPRESS;Database=MyTestDB;Trusted_Connection=True;TrustServerCertificate=True;"
+    }
+}
