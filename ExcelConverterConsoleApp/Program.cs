@@ -11,29 +11,30 @@ namespace ConverterConsoleApp
         {
             string fileName;
             string input;
-            
+            bool isValidFileName,isValidInput;
             do
             {
                 Console.Write("Enter Filename : ");
                 fileName = Console.ReadLine() ?? string.Empty;
-                if (!InputValidator.IsValidFileName(fileName.Trim()))
+                isValidFileName = InputValidator.IsValidFileName(fileName.Trim());
+                if (!isValidFileName)
                 {
                     Console.WriteLine("You have entered invalid filename.");
                 }
             }
-            while (!InputValidator.IsValidFileName(fileName));
+            while (!isValidFileName);
 
             do
             {
                 Console.Write("Convert file to (1) EXCEL (2) TEXT : ");
                 input = Console.ReadLine() ?? string.Empty;
-
-                if (!InputValidator.IsValidInput(input))
+                isValidInput = InputValidator.IsValidInput(input.Trim());
+                if (!isValidInput)
                 {
                     Console.WriteLine("Invalid input. Please select 1 or 2.");
                 }
             }
-            while (!InputValidator.IsValidInput(input));
+            while (!isValidInput);
 
             var sqlGetCarData = new SqlGetCarData(new ApplicationDBContext());
             var datatable = sqlGetCarData.GetCarData();
